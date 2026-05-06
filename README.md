@@ -1,6 +1,33 @@
-# � Node.js Backend Template
+# Node.js Backend Production Template
 
-A production-ready **Node.js backend template** built with **Express, TypeScript, MongoDB, and Redis**. Features structured logging, correlation IDs, comprehensive error handling, and security best practices.
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-green?logo=node.js)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-5.2-black?logo=express)](https://expressjs.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A production-ready **Node.js backend template** built with **Express, TypeScript, and MongoDB**. Features structured logging, correlation IDs, comprehensive error handling, and security best practices.
+
+---
+
+## Table of Contents
+
+- [Features](#-features)
+- [Tech Stack](#%EF%B8%8F-tech-stack)
+- [Prerequisites](#-prerequisites)
+- [Quick Start](#-quick-start)
+- [Project Structure](#-project-structure)
+- [Available Scripts](#-available-scripts)
+- [Environment Variables](#-environment-variables)
+- [Security Features](#-security-features)
+- [Logging](#-logging)
+- [Request Tracing](#-request-tracing)
+- [Error Handling](#%EF%B8%8F-error-handling)
+- [API Response Format](#-api-response-format)
+- [Health Check](#-health-check)
+- [Production Deployment](#-production-deployment)
+- [Testing](#-testing)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ---
 
@@ -9,7 +36,6 @@ A production-ready **Node.js backend template** built with **Express, TypeScript
 - **TypeScript** - Full type safety with strict configuration
 - **Express 5** - Modern web framework with async error handling
 - **MongoDB & Mongoose** - Database with connection pooling and retry logic
-- **Redis** - Caching layer for improved performance
 - **Winston Logger** - Structured logging with daily rotation
 - **Correlation IDs** - Distributed request tracing
 - **Security Middleware** - Helmet, CORS, Rate limiting
@@ -17,6 +43,7 @@ A production-ready **Node.js backend template** built with **Express, TypeScript
 - **Error Handling** - Centralized error handling with custom error classes
 - **Environment Validation** - Zod-based config validation
 - **API Response Utilities** - Consistent response formatting
+- **Code Quality** - ESLint, Prettier, Husky, lint-staged
 
 ---
 
@@ -25,104 +52,58 @@ A production-ready **Node.js backend template** built with **Express, TypeScript
 | Category   | Technology                       |
 | ---------- | -------------------------------- |
 | Runtime    | Node.js 18+                      |
-| Language   | TypeScript 5.8                   |
-| Framework  | Express 5                        |
-| Database   | MongoDB with Mongoose            |
-| Cache      | Redis                            |
-| Validation | Zod                              |
-| Logging    | Winston                          |
+| Language   | TypeScript 6.0                   |
+| Framework  | Express 5.2                      |
+| Database   | MongoDB with Mongoose 9          |
+| Validation | Zod 4                            |
+| Logging    | Winston 3                        |
 | Security   | Helmet, CORS, express-rate-limit |
+| Linting    | ESLint 10, Prettier 3            |
 
 ---
 
-## 📂 Project Structure
+## 📋 Prerequisites
 
-```
-src/
-├── config/                    # Configuration files
-│   ├── index.ts               # Environment validation & export
-│   ├── db.ts                  # MongoDB connection with retry logic
-│   └── logger.config.ts       # Winston logger configuration
-│
-├── controllers/               # Request handlers (route logic)
-│   └── .gitkeep
-│
-├── dtos/                      # Data Transfer Objects
-│   └── .gitkeep
-│
-├── middlewares/               # Express middlewares
-│   ├── correlation.middleware.ts    # Request correlation IDs
-│   ├── error.middleware.ts          # Error handling
-│   ├── request-logging.middleware.ts # HTTP request logging
-│   └── security.middleware.ts       # Helmet, CORS, rate limiting
-│
-├── models/                    # Mongoose models
-│   └── .gitkeep
-│
-├── repositories/              # Data access layer
-│   └── .gitkeep
-│
-├── routes/                    # API routes
-│   └── v1/                    # Version 1 routes
-│       └── .gitkeep
-│
-├── services/                  # Business logic layer
-│   └── .gitkeep
-│
-├── utils/                     # Utility functions
-│   ├── errors/                # Custom error classes
-│   │   └── app.error.ts
-│   └── helpers/               # Helper utilities
-│       ├── request.helpers.ts # AsyncLocalStorage for request context
-│       └── response.helpers.ts # Standardized API responses
-│
-└── server.ts                  # Application entry point
-```
+Before you begin, ensure you have the following installed:
+
+- **Node.js** >= 18.0.0
+- **npm** or **yarn**
+- **MongoDB** (local or remote instance)
+- **Git**
 
 ---
 
 ## ⚡ Quick Start
 
-### 1️⃣ Clone & Install
+### 1. Clone & Install
 
 ```bash
-git clone https://github.com/dibyajyoti79/url_shortner_backend.git
-cd url_shortner_backend
+git clone https://github.com/dibyajyoti79/nodejs-backend-production-setup-template.git
+cd nodejs-backend-production-setup-template
 npm install
 ```
 
-### 2️⃣ Environment Setup
+### 2. Environment Setup
 
-Copy the example environment file:
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env` with your configuration:
+Create a `.env` file in the root directory:
 
 ```env
 NODE_ENV=development
 PORT=4000
-BASE_URL=http://localhost:4000
-MONGO_URI=mongodb://localhost:27017/urlshortener
-REDIS_URL=redis://localhost:6379
-REDIS_COUNTER_KEY=url_counter
+MONGO_URI=mongodb://localhost:27017/your-database-name
 ```
 
-### 3️⃣ Start Services
+### 3. Start MongoDB
 
-Run MongoDB and Redis using Docker:
+Run MongoDB using Docker:
 
 ```bash
-# MongoDB
 docker run -d -p 27017:27017 --name mongo mongo:latest
-
-# Redis
-docker run -d -p 6379:6379 --name redis redis:latest
 ```
 
-### 4️⃣ Run the Server
+Or use your local MongoDB installation.
+
+### 4. Run the Server
 
 ```bash
 # Development (with hot reload)
@@ -137,16 +118,68 @@ Server will be available at: `http://localhost:4000`
 
 ---
 
-## � Available Scripts
+## 📂 Project Structure
+
+```
+src/
+├── config/                    # Configuration files
+│   ├── index.ts               # Environment validation & export
+│   ├── db.ts                  # MongoDB connection with retry logic
+│   └── logger.config.ts       # Winston logger configuration
+│
+├── controllers/               # Request handlers (route logic)
+│
+├── dtos/                      # Data Transfer Objects
+│
+├── middlewares/               # Express middlewares
+│   ├── correlation.middleware.ts    # Request correlation IDs
+│   ├── error.middleware.ts          # Error handling
+│   ├── request-logging.middleware.ts # HTTP request logging
+│   └── security.middleware.ts       # Helmet, CORS, rate limiting
+│
+├── models/                    # Mongoose models
+│
+├── repositories/              # Data access layer
+│
+├── routes/                    # API routes
+│   └── v1/                    # Version 1 routes
+│
+├── services/                  # Business logic layer
+│
+├── utils/                     # Utility functions
+│   ├── errors/                # Custom error classes
+│   │   └── app.error.ts
+│   └── helpers/               # Helper utilities
+│       ├── request.helpers.ts # AsyncLocalStorage for request context
+│       └── response.helpers.ts # Standardized API responses
+│
+├── app.ts                     # Express app configuration
+└── server.ts                  # Application entry point
+```
+
+---
+
+## 📜 Available Scripts
 
 | Script             | Description                              |
 | ------------------ | ---------------------------------------- |
 | `npm run dev`      | Start development server with hot reload |
 | `npm run build`    | Compile TypeScript to JavaScript         |
 | `npm start`        | Run production server from compiled code |
-| `npm run clean`    | Remove build artifacts                   |
-| `npm run lint`     | Run ESLint (requires setup)              |
-| `npm run lint:fix` | Fix ESLint issues (requires setup)       |
+| `npm run clean`    | Remove build artifacts (`dist/`)         |
+| `npm run lint`     | Run ESLint on all files                  |
+| `npm run lint:fix` | Fix ESLint issues automatically          |
+| `npm run format`   | Format code with Prettier                |
+
+---
+
+## 🔧 Environment Variables
+
+| Variable    | Description                                   | Required | Default       |
+| ----------- | --------------------------------------------- | -------- | ------------- |
+| `NODE_ENV`  | Application environment                       | No       | `development` |
+| `PORT`      | Server port (1-65535)                         | No       | `4000`        |
+| `MONGO_URI` | MongoDB connection string (must be valid URL) | Yes      | -             |
 
 ---
 
@@ -246,14 +279,10 @@ throw new BadRequestError("Invalid input", { email: "Invalid format" });
 import { ApiResponse } from "./utils/helpers/response.helpers";
 
 // Simple success
-return res
-  .status(200)
-  .json(ApiResponse.success(data, "Users fetched successfully"));
+return res.status(200).json(ApiResponse.success(data, "Users fetched successfully"));
 
 // Paginated response
-return res
-  .status(200)
-  .json(ApiResponse.paginated(users, { page: 1, limit: 10, total: 100 }));
+return res.status(200).json(ApiResponse.paginated(users, { page: 1, limit: 10, total: 100 }));
 ```
 
 ### Response Structure
@@ -309,9 +338,8 @@ Ensure all production values are set:
 
 ```env
 NODE_ENV=production
-MONGO_URI=mongodb+srv://...
-REDIS_URL=redis://...
-BASE_URL=https://api.yourdomain.com
+PORT=4000
+MONGO_URI=mongodb+srv://user:password@cluster.mongodb.net/database
 ```
 
 ### Process Management
@@ -335,9 +363,16 @@ EXPOSE 4000
 CMD ["node", "dist/server.js"]
 ```
 
+Build and run:
+
+```bash
+docker build -t nodejs-backend .
+docker run -p 4000:4000 --env-file .env nodejs-backend
+```
+
 ---
 
-## 🧪 Testing (Setup Required)
+## 🧪 Testing
 
 ```bash
 # Install testing dependencies
@@ -349,22 +384,34 @@ npm test
 
 ---
 
-## 📝 License
-
-MIT License - feel free to use for personal or commercial projects.
-
----
-
 ## 🤝 Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+### Commit Convention
+
+This project follows [Conventional Commits](https://www.conventionalcommits.org/):
+
+- `feat:` - New features
+- `fix:` - Bug fixes
+- `docs:` - Documentation changes
+- `style:` - Code style changes (formatting)
+- `refactor:` - Code refactoring
+- `test:` - Adding or updating tests
+- `chore:` - Maintenance tasks
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## 📧 Support
 
-For questions or issues, please open a GitHub issue.
+For questions or issues, please [open a GitHub issue](https://github.com/your-username/nodejs-backend-template/issues).
