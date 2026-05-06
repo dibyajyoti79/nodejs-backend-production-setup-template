@@ -1,0 +1,88 @@
+{
+  // JSON schema for IDE autocomplete and validation
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    /* ==================== Language and Environment ==================== */
+    // JavaScript version to compile to (ES2022 supports modern features like top-level await)
+    "target": "ES2022",
+    // API definitions available in the runtime environment (Node.js ES2022 APIs)
+    "lib": ["ES2022"],
+
+    /* ==================== Modules ==================== */
+    // Module system for generated code (CommonJS for Node.js compatibility)
+    "module": "commonjs",
+
+    // Root directory of TypeScript source files
+    "rootDir": "./src",
+    // Allow importing JSON files as modules
+    "resolveJsonModule": true,
+
+    /* ==================== Emit ==================== */
+    // Output directory for compiled JavaScript files
+    "outDir": "./dist",
+    // Generate .d.ts type declaration files for library usage
+    "declaration": true,
+    // Generate source maps for declaration files (helps IDE navigation)
+    "declarationMap": true,
+    // Generate source maps for debugging compiled JavaScript
+    "sourceMap": true,
+    // Remove comments from compiled output
+    "removeComments": true,
+    // Don't emit output if there are type errors
+    "noEmitOnError": true,
+
+    /* ==================== Interop Constraints ==================== */
+    // Enable proper interoperability between CommonJS and ES modules
+    "esModuleInterop": true,
+    // Allow default imports from modules without default exports
+    "allowSyntheticDefaultImports": true,
+    // Ensure import paths match exact file casing (important for cross-platform)
+    "forceConsistentCasingInFileNames": true,
+    // Ensure each file can be safely transpiled in isolation (needed for bundlers)
+    "isolatedModules": true,
+
+    /* ==================== Type Checking ==================== */
+    // Enable all strict type-checking options
+    "strict": true,
+    // Error on expressions with implicit 'any' type
+    "noImplicitAny": true,
+    // Enable strict null checks (no null/undefined unless explicitly typed)
+    "strictNullChecks": true,
+    // Enable strict checking of function types
+    "strictFunctionTypes": true,
+    // Enable strict bind, call, and apply methods on functions
+    "strictBindCallApply": true,
+    // Check that class properties are initialized in constructor
+    "strictPropertyInitialization": true,
+    // Error on 'this' expressions with implicit 'any' type
+    "noImplicitThis": true,
+    // Catch clause variables are typed as 'unknown' instead of 'any'
+    "useUnknownInCatchVariables": true,
+    // Parse in strict mode and emit "use strict" in output
+    "alwaysStrict": true,
+    // Error on unused local variables
+    "noUnusedLocals": true,
+    // Error on unused function parameters
+    "noUnusedParameters": true,
+    // Enforce exact optional property types (undefined must be explicitly added)
+    "exactOptionalPropertyTypes": true,
+    // Error if not all code paths return a value
+    "noImplicitReturns": true,
+    // Error on fallthrough cases in switch statements
+    "noFallthroughCasesInSwitch": true,
+    // Add 'undefined' to index signature results (array[i] could be undefined)
+    "noUncheckedIndexedAccess": true,
+    // Error on overriding members without 'override' keyword
+    "noImplicitOverride": true,
+    // Error on property access from index signatures without dot notation
+    "noPropertyAccessFromIndexSignature": true,
+
+    /* ==================== Completeness ==================== */
+    // Skip type checking of declaration files (faster compilation)
+    "skipLibCheck": true
+  },
+  // Files to include in compilation
+  "include": ["src/**/*"],
+  // Files/directories to exclude from compilation
+  "exclude": ["node_modules", "dist"]
+}
